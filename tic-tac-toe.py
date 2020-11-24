@@ -15,6 +15,7 @@ def DisplayBoard(board):
 
             print("|")
             row += 1
+    #VictoryFor(board,'X')
 
 
 
@@ -22,20 +23,25 @@ def EnterMove(board):
     x = True
     while x:
         ans = int(input("Enter your move: "))
-        if ans <= 9:
-            for i in range(3):
-                for j in range(3):
-                    if ans == blist[i][j]:
-                        a = i
-                        b = j
+        if ans >= 1 and ans <= 9:
+            if any(ans in x for x in board):
+                for i in range(3):
+                    for j in range(3):
+                        if ans == blist[i][j]:
+                            a = i
+                            b = j
+                            break
+                    else:
+                        continue
+
+                    break
+                board[a][b] = "O"
+                return
+            else:
+                print("The field is occupied!")
         else:
             print("Wrong answer!")
 
-        if board[a][b] == "X" or board[a][b] == "O":
-            print("The field is occupied")
-        else:
-            board[a][b] = "O"
-            return
 
 
 def MakeListOfFreeFields(board):
@@ -82,7 +88,7 @@ def VictoryFor(board, sign):
             y = True
 
     if x == True:
-        print("You won")
+        print("You won!")
         return True
     elif y == True:
         print("Computer Won!")
@@ -126,12 +132,13 @@ for row in range(3):
     board.append(x)
     i += 3
 blist = board[:][:]
-print(type(board[0][1]))
 a = DrawMove(board)
-while VictoryFor(board, "O") == False and MakeListOfFreeFields(board) == False:
+while VictoryFor(board, "O") == False and VictoryFor(board, "X") == False and MakeListOfFreeFields(board) == False:
 
     EnterMove(board)
     DisplayBoard(board)
     if VictoryFor(board, "O") == True:
+        break
+    elif VictoryFor(board, "X") == True:
         break
     DrawMove(board)
