@@ -88,10 +88,10 @@ def VictoryFor(board, sign):
             y = True
 
     if x == True:
-        print("You won!")
+        print("Congratulation You won!")
         return True
     elif y == True:
-        print("Computer Won!")
+        print("Computer Won! Don't Worry You Can Try Again!")
         return True
     else:
         return False
@@ -118,27 +118,56 @@ def DrawMove(board):
 
 
 
-
+def clear():
+    os.system('clear')
 
 
 
 
 from random import randrange
-a = False
-board = []
-i = 1
-for row in range(3):
-    x = [column + i for column in range(3)]
-    board.append(x)
-    i += 3
-blist = board[:][:]
-a = DrawMove(board)
-while VictoryFor(board, "O") == False and VictoryFor(board, "X") == False and MakeListOfFreeFields(board) == False:
+from time import sleep
+import os
+while True:
+    a = False
+    board = []
+    i = 1
+    for row in range(3):
+        x = [column + i for column in range(3)]
+        board.append(x)
+        i += 3
+    blist = board[:][:]
+    a = DrawMove(board)
 
-    EnterMove(board)
-    DisplayBoard(board)
-    if VictoryFor(board, "O") == True:
+    while VictoryFor(board, "O") == False and VictoryFor(board, "X") == False and MakeListOfFreeFields(board) == False:
+
+        EnterMove(board)
+        clear()
+        DisplayBoard(board)
+        if VictoryFor(board, "O") == True:
+            break
+        elif VictoryFor(board, "X") == True:
+            break
+        clear()
+        DrawMove(board)
+    sleep(2)
+    gameon = input('\nDo you want to play again?(Y = YES or N = NO): ')
+    if gameon == 'Y' or gameon == 'y':
+        continue
+    elif gameon == 'N'or gameon == 'n':
+        metr = "."
+        for i in range(1, 4):
+            clear()
+            print(f'Terminating The Program{metr * i}')
+            sleep(1)
+
         break
-    elif VictoryFor(board, "X") == True:
+    else:
+        clear()
+        print('Wrong Answer! Im Going To Terminate The Program!')
+        sleep(3)
+        metr = "."
+        for i in range(1, 4):
+            clear()
+            print(f'Terminating The Program{metr * i}')
+            sleep(1)
         break
-    DrawMove(board)
